@@ -3,7 +3,7 @@
 The project is configured by [Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html). All tools needed are contained inside the course virtual machine.
 
 ## Project setup (in virtual machine)
-In the following instructions, ${project_root}$ denotes the `code/colfilterjava` folder. It should contain a `pom.xml` file.
+In the following instructions, `${project_root}` denotes the `code/colfilterjava` folder. It should contain a `pom.xml` file.
 ### Start package manager
 In terminal, execute:
 ```bash
