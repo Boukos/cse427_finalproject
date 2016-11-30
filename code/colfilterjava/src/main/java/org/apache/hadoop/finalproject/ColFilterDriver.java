@@ -25,6 +25,7 @@ public class ColFilterDriver extends Configured implements Tool{
 	    job.setJarByClass(ColFilterDriver.class);
 	    job.setJobName("Word Count with Combiner");
 
+	    
 	    FileInputFormat.setInputPaths(job, new Path(args[0]));
 	    FileOutputFormat.setOutputPath(job, new Path(args[1]));
 	    
