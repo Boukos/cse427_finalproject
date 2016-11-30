@@ -17,7 +17,7 @@ mvn clean
 ```
 Maven will then download all dependencies from the remote repository. It can take some time. After this step, you can close archiva.
 ### Run a test
-The default project implements a WordCount. First compile and packaging the project:
+The default project implements a WordCount. First compile and package the project:
 ```bash
 mvn package
 ```
