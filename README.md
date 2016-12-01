@@ -8,7 +8,7 @@ In the following instructions, `${project_root}` denotes the `code/colfilterjava
 In terminal, execute:
 ```bash
 cd /usr/local/archiva/apache-archiva-1.3.9/bin
-sudo archiva console
+sudo ./archiva console
 ```
 Keep it running.
 ### Initialize Maven
