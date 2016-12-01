@@ -7,6 +7,7 @@ In the following instructions, `${project_root}` denotes the `code/colfilterjava
 ### Start package manager
 In terminal, execute:
 ```bash
+cd /usr/local/archiva/apache-archiva-1.3.9/bin
 sudo archiva console
 ```
 Keep it running.
