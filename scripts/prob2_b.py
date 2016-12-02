@@ -33,7 +33,7 @@ print " "
 print "If we use the movie as the key, the expected overlap is: " + str(totalSameNumber/totaltry)
 
 totalSameNumber = 0.0
-# use movie as key
+# use user as key
 TrainData = sc.textFile(trainingFile).map(transferUserTunple).groupByKey().mapValues(list).map(onlyKeyLeft).takeSample(True, totaltry)
 TestData = sc.textFile(testingFile).map(transferUserTunple).groupByKey().mapValues(list).map(onlyKeyLeft).takeSample(True, totaltry)
 
