@@ -55,6 +55,7 @@ public int run (String[] args) throws Exception {
     
     job.setMapperClass(prep_job_mapper.class);
     job.setReducerClass(prep_job_reducer.class);
+    job.setCombinerClass(prep_job_reducer.class);
     
     job.setMapOutputKeyClass(Text.class);
     job.setMapOutputValueClass(IntPairWritable.class);
