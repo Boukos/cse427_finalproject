@@ -10,36 +10,38 @@ def transferUserTunple(x):
 	[movieID,userName,rate] = x.split(',')
 	return (userName,movieID)
 
+def onlyKeyLeft(x):
+	(key, oneList) = x
+	return oneList
+
 trainingFile = "hdfs:/user/training/netflix_subset/TrainingRatings.txt" # need to change
 testingFile = "hdfs:/user/training/netflix_subset/TestingRatings.txt"  # need to change
 
+
+totalSameNumber = 0.0
+totaltry = 100000
 # use movie as key
-TrainData = sc.textFile(trainingFile).map(transferMovieTunple).groupByKey().mapValues(list)
-TestData = sc.textFile(testingFile).map(transferMovieTunple).groupByKey().mapValues(list)
+TrainData = sc.textFile(trainingFile).map(transferMovieTunple).groupByKey().mapValues(list).map(onlyKeyLeft).takeSample(True, totaltry)
+TestData = sc.textFile(testingFile).map(transferMovieTunple).groupByKey().mapValues(list).map(onlyKeyLeft).takeSample(True, totaltry)
 
-totalSameNumber = 0
-totaltry = 10000
 for i in range(totaltry):
-	data1 = TrainData.takeSample(False, 1)
-	data2 = TestData.takeSample(False, 1)
-	vec1 = data1[0][1]
-	vec2 = data2[0][1]
+	vec1 = TrainData[i]
+	vec2 = TestData[i]
 	totalSameNumber += len(list(set(vec1).intersection(vec2)))
 
-print "If we use the movie as the key, the expected overlap is: "+ str(float(totalSameNumber)/totaltry)
+print " "
+print "If we use the movie as the key, the expected overlap is: " + str(totalSameNumber/totaltry)
 
+totalSameNumber = 0.0
+# use movie as key
+TrainData = sc.textFile(trainingFile).map(transferUserTunple).groupByKey().mapValues(list).map(onlyKeyLeft).takeSample(True, totaltry)
+TestData = sc.textFile(testingFile).map(transferUserTunple).groupByKey().mapValues(list).map(onlyKeyLeft).takeSample(True, totaltry)
 
-# use user as key
-TrainData = sc.textFile(trainingFile).map(transferUserTunple).groupByKey().mapValues(list)
-TestData = sc.textFile(testingFile).map(transferUserTunple).groupByKey().mapValues(list)
-
-totalSameNumber = 0
-totaltry = 10000
 for i in range(totaltry):
-	data1 = TrainData.takeSample(False, 1)
-	data2 = TestData.takeSample(False, 1)
-	vec1 = data1[0][1]
-	vec2 = data2[0][1]
+	vec1 = TrainData[i]
+	vec2 = TestData[i]
 	totalSameNumber += len(list(set(vec1).intersection(vec2)))
 
-print "If we use the user as the key, the expected overlap is: "+ str(float(totalSameNumber)/totaltry)
+print " "
+print "If we use the users as the key, the expected overlap is: " + str(totalSameNumber/totaltry)
+
