@@ -1,1 +1,31 @@
 %main
+
+\documentclass{article}
+
+\usepackage[margin=0.8in]{geometry} \usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Dine Elreedy, Chen Liu, Hang Yan, Hao Yan}
+\lhead{CSE 427 Final Project Report}
+
+\title{CSE 427 final project report\\
+  Netflix user rating prediction with collaborative filtering}
+
+\author{Dina Elreedy, Chen Liu, Hang Yan, Hao Yan}
+
+\begin{document}
+\maketitle
+  \section{Introduction}
+  
+  \input{preprocessing.tex}
+  \input{colfilter.tex}
+  \input{prediction.tex}
+  \input{cloud.tex}
+  \input{result.tex}
+  \section{Conclusion}
+\end{document}
