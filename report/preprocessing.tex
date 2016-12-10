@@ -67,7 +67,11 @@ The result suggests that use movie-movie similarity is more
 appropriate.
 
 \subsection*{Memory consumption}
-
+The algorithm will use two MapReduce jobs: the first job computes
+the list of users that rate each movie, and the second job computes
+the similarity of each pair of movies. The memory bottleneck happens
+at the reducer of each job. For first job, the expected memory usage
+is 111.5589MB and for the second job, the expected memory usage is 4.4MB.
 
 To summarize, we decided to implement an algorithm that first compute
 movies that have similar user ratings with the query entry, then
