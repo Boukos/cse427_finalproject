@@ -2,7 +2,7 @@
 
 \documentclass{article}
 
-\usepackage[margin=0.8in]{geometry} \usepackage{graphicx}
+\usepackage{geometry} \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{listings}
 \usepackage{multirow}
@@ -21,11 +21,32 @@
 \begin{document}
 \maketitle
   \section{Introduction}
-  
+  In this project we tackled the problem of predicting the ratings for
+  movies. Formally, given a set of $n$ users and $k$ movies and an
+  incomplete rating matrix $U$ of $n$ by $k$, we want to predict the
+  missing entry of $U$. The prediction is made possible with a large
+  set of training data, consisting the incomplete rating of other $m$
+  users for the same set of $k$ movies.
+
+  There are multiple ways to solve this problem. The algorithm we are
+  using is collaborative filtering, which takes the idea from $kth$
+  nearest neighbor search (KNN). Given a user and the movie whose
+  rating we want to predict, we first find similar users in the
+  training set that have the ratings on this movie, then compute the
+  unknow rating from these known ratings. The core of the algorithm is
+  to find similar users with the testing user in the training
+  set. Given the scale of the problem, we implemented our algorithm
+  with MapReduce and execute it on the real cloud platform.
+
   \input{preprocessing.tex}
-  \input{colfilter.tex}
-  \input{prediction.tex}
+    
+  \input{implementation.tex}
+
   \input{cloud.tex}
+
   \input{result.tex}
+
   \section{Conclusion}
+
+  \input{groupwork.tex}
 \end{document}

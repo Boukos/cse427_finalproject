@@ -1,2 +1,23 @@
 %Write about cloud execution here
 \section{Cloud execution}
+The size of the problem exceeds the computation resource of a single
+virtual machine. We therefore use the HDInsight service on Microsoft
+Azure for the full execution.
+%% \begin{figure}[!ht]
+%%   \centering
+%%   \includegraphics{images/azure}
+%%   \caption{HDInsight service on Microsoft Azure}
+%%   \label{fig:azure}
+%% \end{figure}
+
+We created a cluster with 2 master node and 4 computing nodes. Each of
+the computing nodes has the configuration of 4 cores CPU, 14GB RAM and
+200GB local disk. See Figure~\ref{fig:node}.
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.95\textwidth]{images/node}
+  \caption{Node configuration}
+  \label{fig:node}
+\end{figure}
+
+The computing time with the cluster is XXX.
