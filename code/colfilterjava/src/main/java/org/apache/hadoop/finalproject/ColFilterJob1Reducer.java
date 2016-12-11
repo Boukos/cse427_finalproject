@@ -19,7 +19,7 @@ public class ColFilterJob1Reducer extends Reducer<IntWritable, IntPairWritable, 
 			 * For each value in the set of values passed to us by the mapper:
 			 */
 
-			System.out.println("user " + key.get() + " " + values.toString());
+//			System.out.println("user " + key.get() + " " + values.toString());
 
 			ArrayList<IntPairWritable> values_copy = new ArrayList<IntPairWritable>();
 			for (IntPairWritable value_1 : values) {
@@ -32,7 +32,7 @@ public class ColFilterJob1Reducer extends Reducer<IntWritable, IntPairWritable, 
 //				}
 			}
 			for (IntPairWritable value_1 : values_copy) {
-		    	System.out.println("movie " + value_1.getLeft() + " " + value_1.getRight());
+//		    	System.out.println("movie " + value_1.getLeft() + " " + value_1.getRight());
 				for (IntPairWritable value_2 : values_copy) {
 					if (value_1.getLeft() < value_2.getLeft()) {				    	
 				    	context.write(new IntPairWritable(value_1.getLeft(), value_2.getLeft()), new IntPairWritable(value_1.getRight(), value_2.getRight()));
