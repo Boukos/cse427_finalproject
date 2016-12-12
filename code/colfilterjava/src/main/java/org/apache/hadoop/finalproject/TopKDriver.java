@@ -1,5 +1,5 @@
+package org.apache.hadoop.finalproject;
 
-package stubs;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
@@ -21,11 +21,8 @@ public class TopKDriver extends Configured implements Tool {
 
   @Override
   public int run(String[] args) throws Exception {
-
-  
-
     Job job = new Job(getConf());
-    job.setJarByClass(AggregateByKeyDriver.class);
+    job.setJarByClass(TopKDriver.class);
     job.setJobName("TopKDriver");
   
 

@@ -1,4 +1,4 @@
-package stubs;
+package org.apache.hadoop.finalproject;
 
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.DoubleWritable;
