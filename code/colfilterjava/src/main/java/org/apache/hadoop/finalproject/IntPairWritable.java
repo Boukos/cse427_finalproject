@@ -1,4 +1,3 @@
-
 package org.apache.hadoop.finalproject;
 import java.io.*;
 
@@ -89,8 +88,6 @@ public class IntPairWritable implements WritableComparable<IntPairWritable> {
         	if (RightResult < 0){
         		ret = -1;
         	}
-		if (RightResult == 0)
-		    ret = 0;
     	}
 //    	if (left > right){
 //    		ret = 1;
