@@ -1,26 +1,25 @@
-
 package org.apache.hadoop.finalproject;
-import java.io.*;
 
+import java.io.*;
 
 import org.apache.hadoop.io.WritableComparable;
 
-public class IntPairWritable implements WritableComparable<IntPairWritable> {
+public class NumPairWritable implements WritableComparable<NumPairWritable> {
 
   Integer left;
-  Integer right;
+  Double right;
 
   /**
    * Empty constructor - required for serialization.
    */ 
-  public IntPairWritable() {
+  public NumPairWritable() {
 
   }
 
   /**
    * Constructor with two String objects provided as input.
    */ 
-  public IntPairWritable(int left, int right) {
+  public NumPairWritable(int left, double right) {
     this.left = left;
     this.right = right;    
   }
@@ -34,7 +33,7 @@ public class IntPairWritable implements WritableComparable<IntPairWritable> {
      * TODO implement
      */
    out.writeInt(left);
-   out.writeInt(right);
+   out.writeDouble(right);
   }
 
   /**
@@ -46,7 +45,7 @@ public class IntPairWritable implements WritableComparable<IntPairWritable> {
      * TODO implement
      */
 	  left = in.readInt();
-	  right = in.readInt();
+	  right = in.readDouble();
   }
 
   /**
@@ -54,7 +53,7 @@ public class IntPairWritable implements WritableComparable<IntPairWritable> {
    * comparing the left strings first. If the left strings are equal,
    * then the right strings are compared.
    */
-  public int compareTo(IntPairWritable other) {
+  public int compareTo(NumPairWritable other) {
     int ret = 0;
     
     if (equals(other)){
@@ -132,7 +131,7 @@ public class IntPairWritable implements WritableComparable<IntPairWritable> {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    IntPairWritable other = (IntPairWritable) obj;
+    NumPairWritable other = (NumPairWritable) obj;
     
     if((left==other.left)&&(right==(other.right)))
       return true;
@@ -158,7 +157,7 @@ public class IntPairWritable implements WritableComparable<IntPairWritable> {
   {
 	  return left;
   }
-  public int getRight()
+  public Double getRight()
   {
 	  return right;
   }
