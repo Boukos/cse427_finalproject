@@ -1,4 +1,4 @@
-package org.apache.hadoop.finalproject;
+package stubs;
 
 
 import java.io.IOException;
@@ -39,13 +39,14 @@ public class TopKReducer  extends
 
    private int N = 10; // default
  
-   private TreeMultimap< Double,Integer> topK =  TreeMultimap.create(Ordering.natural(),Ordering.natural().reverse());
   
 
    @Override
    public void reduce(IntWritable key, Iterable<NumPairWritable> values, Context context) 
       throws IOException, InterruptedException {
 	  int  values_size=0;
+	  TreeMultimap< Double,Integer> topK =  TreeMultimap.create(Ordering.natural(),Ordering.natural().reverse());
+	  
       for (NumPairWritable val : values) {
   
     	 topK.put(val.getRight(),val.getLeft());
@@ -60,22 +61,25 @@ public class TopKReducer  extends
     	  List<Double> keys = new ArrayList<Double>(topK.keySet());
      	//  List<Integer> ids = new ArrayList<Integer>(topK.values());
     	  int i=0;
+    	  int j=0;
     	 int  m=Math.min(values_size,N);
-    	  while(i<m)
+    	  while(j<keys.size())
     	  {
           //for(int i=keys.size()-1; i>=0; i--){
           	//look up from id to get movietitles
         //  	movie_titles.txt
-    			Double sim=keys.get(i);
-          for(Integer id :topK.get(keys.get(i)))
+    			Double sim=keys.get(j);
+    			
+          for(Integer id :topK.get(keys.get(j)))
           {
         	    
         	     context.write(key,new NumPairWritable(id,sim));
           i=i+1;
           }
+          j=j+1;
     
         }
-
+topK.clear();
 
    }
    
@@ -85,16 +89,7 @@ public class TopKReducer  extends
       this.N = context.getConfiguration().getInt("N", 10); // default is top 10
    }
    
-//   protected void cleanup(Context context) throws IOException,
-//   InterruptedException {
-//	   for (Double k : topK.keySet())
-//	   {
-// topK.removeAll(k);
-//   }
-//	   topK.clear();
-//}
 }
-
    
 
 

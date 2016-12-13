@@ -1,10 +1,6 @@
-<<<<<<< HEAD
+package stubs;
 
-=======
->>>>>>> 5fee7087a96141aec356352ae5241e3638794cd8
-package org.apache.hadoop.finalproject;
 import java.io.*;
-
 
 import org.apache.hadoop.io.WritableComparable;
 
@@ -64,21 +60,8 @@ public class IntPairWritable implements WritableComparable<IntPairWritable> {
     	ret = 0;
     }
     else{
-    	int LeftResult = 0;
-    	if(left<other.left)
-    		LeftResult=-1;
-    	else if(left==other.left)
-    		LeftResult=0;
-    	else if (left>other.left)
-    		LeftResult=1;
-    	
-    	int RightResult = 0;
-    	if(right<other.right)
-    		RightResult=-1;
-    	else if(right==other.right)
-    		RightResult=0;
-    	else if (right>other.right)
-    		RightResult=1;
+    	int LeftResult = left.compareTo(other.left);
+    	int RightResult = right.compareTo(other.right);
     	if (LeftResult > 0){
     		ret = 1;
     	}
@@ -92,7 +75,7 @@ public class IntPairWritable implements WritableComparable<IntPairWritable> {
         	if (RightResult < 0){
         		ret = -1;
         	}
-    	}
+    	
 //    	if (left > right){
 //    		ret = 1;
 //    	}
@@ -106,8 +89,8 @@ public class IntPairWritable implements WritableComparable<IntPairWritable> {
 //        	if (RightResult < 0){
 //        		ret = -1;
 //        	}
-//    	}
-    }   
+    	}
+    	}  
     return ret;
   }
 

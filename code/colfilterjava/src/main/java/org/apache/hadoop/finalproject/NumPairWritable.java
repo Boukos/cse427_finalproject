@@ -1,4 +1,4 @@
-package org.apache.hadoop.finalproject;
+package stubs;
 
 import java.io.*;
 
@@ -60,21 +60,8 @@ public class NumPairWritable implements WritableComparable<NumPairWritable> {
     	ret = 0;
     }
     else{
-    	int LeftResult = 0;
-    	if(left<other.left)
-    		LeftResult=-1;
-    	else if(left==other.left)
-    		LeftResult=0;
-    	else if (left>other.left)
-    		LeftResult=1;
-    	
-    	int RightResult = 0;
-    	if(right<other.right)
-    		RightResult=-1;
-    	else if(right==other.right)
-    		RightResult=0;
-    	else if (right>other.right)
-    		RightResult=1;
+    	int LeftResult = left.compareTo(other.left);
+    	int RightResult = right.compareTo(other.right);
     	if (LeftResult > 0){
     		ret = 1;
     	}
@@ -88,6 +75,7 @@ public class NumPairWritable implements WritableComparable<NumPairWritable> {
         	if (RightResult < 0){
         		ret = -1;
         	}
+    	}
     	}
 //    	if (left > right){
 //    		ret = 1;
@@ -103,7 +91,7 @@ public class NumPairWritable implements WritableComparable<NumPairWritable> {
 //        		ret = -1;
 //        	}
 //    	}
-    }   
+      
     return ret;
   }
 

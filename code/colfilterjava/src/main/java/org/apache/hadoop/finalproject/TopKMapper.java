@@ -1,4 +1,6 @@
-package org.apache.hadoop.finalproject;
+package stubs;
+
+
 
 import java.io.IOException;
 import java.util.Map;
