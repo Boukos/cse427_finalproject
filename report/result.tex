@@ -1,2 +1,29 @@
 %Write result here
 \section{Results}
+In this section, we show results of our experiments on the netflix subset dataset. We evaluate our algorithm performance according to the prediction accuracy (using root mean square eror(RMSE) and mean absolute error(MAE) and the number of unpredicted ratings in the test set.
+
+One significant parameter in our algorithm is $K$, number of similar movies to consider in calculating ratings' predictions. We have tried different settings of $K$ to investigate how it can affect the performance of our algorithm. Table \ref{tab:errorsK} summarizes the prediction results for different Ks ranging from to.
+
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+  K & MAE & RMSE & Percentage of Unpredicted Ratings \\
+    \hline
+    20 & 0.982 & 1.322 & 30.36\%\\
+\hline
+50 & 0.851 & 1.136 &  12.11\%\\
+\hline
+100 & 0.798 & 1.045 & 5.04 \%
+\hline
+200 & 0.782 & 1.004 & 1.85 \% 
+\hline
+Adaptive &  \\ 
+    \hline
+  \end{tabular}
+  \caption{Collaborative Filtering (Avg. Ratings) Performance using different $K$ values}
+  \label{tab:errorsK}
+\end{table}
+It can be observed from Table \ref{tab:errorsK} that increasing $K$ has a significant impact on reducing percentage of unpredicted ratings we have, this is reasonable as considering more similar neighbours (movies), would increase the potential that some of them are rated by the users in the test set, and accordingly we can provide more predictions to the missing entries in the test set.
+
