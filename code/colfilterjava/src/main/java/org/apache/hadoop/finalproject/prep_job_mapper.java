@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-package stubs;
-=======
 package org.apache.hadoop.finalproject;
->>>>>>> d781564a0ef62676395471e7ae62f70083e12cc2
 import java.io.IOException;
 
 import org.apache.hadoop.io.IntWritable;

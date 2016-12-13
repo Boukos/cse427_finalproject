@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-package stubs;
-=======
 package org.apache.hadoop.finalproject;
->>>>>>> d781564a0ef62676395471e7ae62f70083e12cc2
 
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.DoubleWritable;
@@ -59,16 +55,10 @@ public int run (String[] args) throws Exception {
     
     job.setMapperClass(prep_job_mapper.class);
     job.setReducerClass(prep_job_reducer.class);
-<<<<<<< HEAD
-    
-    job.setMapOutputKeyClass(Text.class);
-    job.setMapOutputValueClass(IntWritable.class);
-=======
     job.setCombinerClass(prep_job_reducer.class);
     
     job.setMapOutputKeyClass(Text.class);
     job.setMapOutputValueClass(IntPairWritable.class);
->>>>>>> d781564a0ef62676395471e7ae62f70083e12cc2
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(DoubleWritable.class);
     
