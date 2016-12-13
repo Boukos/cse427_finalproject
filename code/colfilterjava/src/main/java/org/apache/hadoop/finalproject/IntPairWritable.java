@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5fee7087a96141aec356352ae5241e3638794cd8
 package org.apache.hadoop.finalproject;
 import java.io.*;
 
