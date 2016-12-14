@@ -6,22 +6,22 @@ For the first stage, we have implemented it using three map reduce jobs:\\
 \begin{itemize}
 \item  Job1:
 This job works on the training set, it produces movie-movie pairs and their ratings by each user.\\
-Mapper Input:(movie_i,user_k,rate_{ik}) triplets\\
-Mapper Output:(user_k,(movie_i,rate_ik))\\
-Reducer Input:(user_k,[(movie_1,rate_1k),..(movie_i,rate_ik),...]), all movies rated by user k along with their rates\\
-Reducer Output:(movie_i,movie_j),(rate_{jk},rate_{jk}), all pairs of movies rated by user k and their rates \\
+Mapper Input:($movie_i$,$user_k$,$rate_{ik}$) triplets\\
+Mapper Output:($user_k$,($movie_i$,$rate_ik$))\\
+Reducer Input:($user_k$,[($movie_1$,$rate_1k$),..($movie_i$,$rate_ik$),...]), all movies rated by user k along with their rates\\
+Reducer Output:($movie_i$,$movie_j$),($rate_{jk}$,$rate_{jk}$), all pairs of movies rated by user k and their rates \\
 \item Job2:
 This job works on the first job's output, the job mainly calculates cosine similarity between every pair of movies provided in the first job's output using their overlapped ratings.\\ 
-Mapper Input:(movie_i,movie_j),(rate_{ik},rate_{jk}), rated pairs by user k\\
-Mapper Output:(movie_i,movie_j),(rate_{ik},rate_{jk}) (It is Identity Mapper)\\
-Reducer Input:(movie_i,movie_j),[(rate_{i1},rate_{j1}),(rate_{i2},rate_{j2}),...(rate_{ik},rate_{jk})])\\
-Reducer Output:(movie_i,movie_j),cos_sim(movie_i,movie_j)\\
+Mapper Input:($movie_i$,$movie_j$),($rate_{ik}$,$rate_{jk}$), rated pairs by user k.\\
+Mapper Output: ($movie_i$,$movie_j$),($rate_{ik}$,$rate_{jk}$) (It is Identity Mapper)\\
+Reducer Input:($movie_i$,$movie_j$),[($rate_{i1}$,$rate_{j1}$),($rate_{i2}$,$rate_{j2}$),...($rate_{ik}$,$rate_{jk}$)])\\
+Reducer Output:($movie_i$,$movie_j$),$cos_sim(movie_i,movie_j)$\\
 \item Job3:
-After calculating similarity between each movie pairs, the third job selects the top-k similar movies for each movie. The default K we use is 10, however, we can pass K as an input parameter using command line.\\
-Mapper Input:((movie_i,movie_j),cos_sim(movie_i,movie_j)\\
-Mapper Output:(movie_i,(movie_j,cos_sim(movie_i,movie_j))\\
-Reducer Input:(movie_i,[(movie_j,cos_sim(movie_i,movie_j),.(movie_k,cos_sim(movie_i,movie_k),....]), list of all overlapped movies with movie_i and their corresponding rates\\
-Reducer Output:Top-K similar movies per movie i: (movie_i,[(movie_j,cos_sim(movie_i,movie_j),.(movie_k,cos_sim(movie_i,movie_k)])\\
+After calculating similarity between each movie pairs, the third job selects the top-k similar movies for each movie. The default $K$ we use is 10, however, we can pass K as an input parameter using command line.\\
+Mapper Input:(($movie_i$,$movie_j$),$cos_sim(movie_i,movie_j)$\\
+Mapper Output:($movie_i$,($movie_j,cos_sim(movie_i,movie_j)$)\\
+Reducer Input:($movie_i,[(movie_j,cos_sim(movie_i,movie_j$),.($movie_k,cos_sim(movie_i,movie_k),....]$), list of all overlapped movies with $movie_i$and their corresponding rates\\
+Reducer Output:Top-K similar movies per movie $i$: $(movie_i,[(movie_j,cos_sim(movie_i,movie_j),.(movie_k,cos_sim(movie_i,movie_k)])$\\
 \end{itemize}
 
 For the second stage, since the top-K entries per movie is a small number, then this task does not require a Map Reduce job. Accordingly, we have implemented it using....
