@@ -16,9 +16,9 @@ jobs:\\
       \hline
       Mapper Input & ($movie_i$,$user_k$,$rate_{ik}$) triplets\\
       \hline
-      Mapper Output & ($user_k$,($movie_i$,$rate_ik$))\\
+      Mapper Output & ($user_k$,($movie_i$,$rate_{ik}$))\\
       \hline
-      Reducer Input & ($user_k$,[($movie_1$,$rate_1k$),..($movie_i$,$rate_ik$),...]), all movies rated by user k along with their rates\\
+      Reducer Input & ($user_k$,[($movie_1$,$rate_{1k}$),..($movie_i$,$rate_{ik}$),...]), all movies rated by user k along with their rates\\
       \hline
       Reducer Output & ($movie_i$,$movie_j$),($rate_{jk}$,$rate_{jk}$), all pairs of movies rated by user k and their rates\\
       \hline
@@ -58,6 +58,6 @@ jobs:\\
   \end{tabular}
 \end{itemize}
 
-For the second stage, since the top-K entries per movie is a small
-number, this task does not require a Map Reduce job. Accordingly, we
-have implemented it using Python.
+For the second stage, since the top-K entries per movie is of a small
+size, this task does not require a Map Reduce job. Accordingly, we
+have implemented it using Python scripts.
