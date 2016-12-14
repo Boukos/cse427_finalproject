@@ -1,10 +1,10 @@
 %Write result here
 \section{Results}
-In this section, we show results of our experiments on the netflix
-subset dataset. We evaluate our algorithm performance by the
-prediction accuracy (using root mean square eror(RMSE) and mean
-absolute error(MAE) and the number of unpredicted ratings in the test
-set.
+We evaluated the performance of our algorithm and the impact of
+parameters on a subset of Netflix Prize dataset by the prediction
+accuracy and the number of unpredicted ratings in the test set. We
+report two accuracy measurements: the root mean swuare error(RMSE) and
+the mean absolute error(MAE).
 
 One important parameter in our algorithm is $K$, the number of similar
 movies to consider in calculating ratings' predictions. We have tried
@@ -30,22 +30,32 @@ performance of our algorithm.
 %values} \label{tab:errorsK}
 %\end{table}
 Figure ~\ref{fig:rmse} and Figure \ref{fig:mae} shows the RMSE and MAE
-for our collaborative filtering algorithm using different values of
-the number of considered similar movies ($K$). The error measures,
-RMSE and MAE, are computed for all entries in the test set. For the
-entries that we could not predict (due to the small $K$), we use their
-average ratings in the training set as our prediction. The average
-rating per movie is calculated by a pre-processing Map Reduce job.
+for our collaborative filtering algorithm using different $K$. The
+error measures, RMSE and MAE, are computed for all entries in the test
+set. For the entries that we could not predict (due to the small $K$),
+we use their average ratings in the training set as our
+prediction. The average rating per movie is calculated by a
+pre-processing Map Reduce job.
 
-We compare different settings for prediction in Figure ~\ref{fig:rmse}
-and Figure ~\ref{fig:mae} including: using average rating prediction
-of the top $K$ movies, using weighted average prediction of the top
-$K$ movies, and using rounded versions for both average prediction and
-weighted average prediction. Additionally, we compare our results to
-two baselines: the first is predicting the global mean of movie
-ratings for all entries, and the second baseline uses the mean rating
-of the movie which is being predicted. These mean estimates are
-calculated using the training ratings only.
+The results suggest that increasing $K$ below a threshold helps
+improving the overall accuracy. However, increasing the $K$ above that
+threshold will descrese the accuracy. Figure~\ref{fig:rmsepred} shows
+the RMSE for predicted entries only with varying $K$. This suggests
+that the improvement of accuracy when we increase $K$ mainly comes the
+fact that we have more entries predicted. However, further increasing
+$K$ over a threshold provides only insignificant gain in ratio of
+predicted entries, but will introduce large variance to the model,
+which damages the overall accuracy. We have found that the ``sweet
+point'' of $K$ is around 200.
+
+We also compared different methods for prediction in Figure
+~\ref{fig:rmse} and Figure ~\ref{fig:mae}, including using average
+rating of the top $K$ movies and using weighted (by similarity)
+average rating of the top $K$ movies. We also tried rounding the
+predicted ratings to the nearest integers for both average rating and
+weighted average rating. Additionally, we compare our results to two
+baseline methods: the global average rating of all movies, and the
+average rating of each individual movie.
 
 \begin{figure}[!ht]
   \centering \includegraphics[width=0.8\textwidth]{images/rmse.png}
@@ -61,71 +71,55 @@ calculated using the training ratings only.
   \label{fig:mae}
 \end{figure}
 
-It can be observed from Figure \ref{fig:rmse} and Figure \ref{fig:mae}
-that increasing number of considered similar movies $K$ helps
-increasing accuracy. This can by expained by the fact that increasing
-$K$ enables our algorithm to predict more missing entries, which gives
-higher accuracy for these entries. These figures show that using
-weighted average predictions is slightly better than using average
-predictions. However, this improvement is insignificant since the
-variance of cosine similarities between the top $K$ movies being rated
-by the same user under test is not large. Regarding, rounding the
-predictions, it can be noticed that rounding reduces MAE while it
-largely increases RMSE over the movie mean baseline as shown in Figure
-\ref{fig:rmse} since RMSE is more sensitive than MAE to outliers. If
-rounding goes on the wrong direction, RMSE would increase. Therefore,
-we have used unrounded version of weighted average prediction for
-further experiments.
+\begin{figure}[!ht]
+  \centering \includegraphics[width=0.8\textwidth]{images/rmsep.png}
+  \caption{RMSE using weighted average prediction for predicted entries
+    only with different $K$ values}
+  \label{fig:rmsepred}
+\end{figure}
 
-Figure ~\ref{fig:perc} shows the percentage of unpredicted ratings
-using our collaborative filtering approach as we varies $K$. It can be
-observed from this figure that increasing $K$ has a significant impact
-on reducing percentage of unpredicted ratings we have, this is
-reasonable as considering more similar neighbours (movies), would
-increase the probability of having some of these movies rated by the
-users in the test set, and accordingly we can provide more predictions
-to the missing entries in the test set. However, increasing $K$ beyond
-some extent would not help much decrease the number of unpredicted
-entries. Moreover, it could hurt accuracy since we are considering
-many distant (non-similar) movies if we set $K$ greater than 500 as
-shown in Figure ~\ref{fig:rmse} and Figure ~\ref{fig:mae} that errors
-start to saturate or even drop for the MAE at this point. For $K=500$,
-the percentage of unpredicted ratings is $0.84\%$ and for $K=1000$,
-the percentage of unpredicted ratings is $0.824\%$.
+The results suggest that using weighted average rating is better than
+using unweighted average rating by only a small margin. This is due to
+the fact that the variance of cosine similarities between the top $K$
+movies being rated by the same user is not large. The result also
+shows that rounding the predicted ratings will damage the RMSE
+measurement, since RMSE is sensitive to noises and will amplify small
+errors. Therefore, we only report the unrounded results below.
+
+%% Regarding, rounding
+%% the predictions, it can be noticed that rounding reduces MAE while it
+%% largely increases RMSE over the movie mean baseline as shown in Figure
+%% \ref{fig:rmse} since RMSE is more sensitive than MAE to outliers. If
+%% rounding goes on the wrong direction, RMSE would increase. Therefore,
+%% we have used unrounded version of weighted average prediction for
+%% further experiments.
+
+Figure ~\ref{fig:perc} shows the percentage of unpredicted ratings as
+we varies $K$. It shows that increasing $K$ will reduce the percentage
+of unpredicted ratings, since considering more similar neighbours
+(movies) would increase the probability of having some of these movies
+rated by the tesing user. However, this benefit will be insignificant
+when $K$ is already large. For example, the percentage of unpredicted
+ratings only drops from $0.84\%$ to $0.824\%$ as we increase $K$ from
+$500$ to $1000$. As discussed above, this benefit will be overwhelmed
+by the large variance introduced by large $K$.
 
 \begin{figure}[!ht]
-  \centering \includegraphics[width=0.7\textwidth]{images/perc.png}
+  \centering \includegraphics[width=0.8\textwidth]{images/perc.png}
   \caption{Percentage of unpredicted ratings using different $K$
     values}
   \label{fig:perc}
 \end{figure}
 
-According to our results, increasing $K$ below a threshold helps
-improving the overall accuracy. However, increasing the $K$ above that
-threshold will descrese the accuracy. This can be observed from Figure
-\ref{fig:rmsepred} which shows the RMSE for the predicted entries in
-the test set, excluding the ones that we could not predict using
-current $K$. This observation agrees with the theory in machine
-learning, which states that increasing $K$ will reduce the bias of the
-model, but will increase its variance. We have found that the ``sweet
-point'' of $K$ is around 200.
-
-\begin{figure}[!ht]
-  \centering \includegraphics[width=0.8\textwidth]{images/rmsep.png}
-  \caption{RMSE using Weighted Avg. Prediction for predicted entries
-    only using different $K$ values}
-  \label{fig:rmsepred}
-\end{figure}
-
 %%Limiting m
-To balance the ratio of predicted entries and the overal accuracy, we
-developed an adaptive prediction scheme. We use two parameters to
-control the whole process: for a specific user $i$, and movie $j$, we
-first find $K=500$ candidate movies using the above algorithm. In the
-next step, instead of using all 500 similar movies, we only use top
-$M$ movies that are rated by the user $i$. In the case that the user
-$i$ rated less than $M$ movies among all $K=500$ candidates, we drop
-parameter $M$ and use all $K$ candidates.
+To balance the ratio of predicted entries and the accuracy of
+predicted ratings, we developed an adaptive prediction scheme. We use
+two parameters to control the whole process: for a specific user $i$,
+and movie $j$, we first find $K=500$ candidate movies using the above
+algorithm. In the next step, instead of using all 500 similar movies,
+we only use top $M$ movies that are rated by the user $i$. In the case
+that the user $i$ rated less than $M$ movies among all $K=500$
+candidates we use all candidates movies that are rated by user $i$.
 
 %% However, our scheme aims at not sacrificing the accuracy of the
 %% already predicted entries, the ones having many overlapping movies
@@ -136,11 +130,10 @@ parameter $M$ and use all $K$ candidates.
 %% (similar movies) actually used in rating prediction to the top $M$ out
 %% of these $K$ movies, where $M$ is much less than $K$.
 
-Figure ~\ref{fig:rmsem} and ~\ref{fig:maem} show RMSE and MAE for this
-setting using weighted average predictions, $K=500$ and with variable
-$M$ from 5 to 100. With $M=20$ we are able to have comparable accuracy
-with $K=200$, while the comparable amount of predicted entries with
-$K=500$, See Table~\ref{tab:finres}.
+Figure~\ref{fig:rmsem} and~\ref{fig:maem} show RMSE and MAE with
+$K=500$ and varying $M$ from 5 to 100. With $M=20$ we are able to have
+comparable accuracy as with $K=200$, while the comparable amount of
+predicted entries as with $K=500$, See Table~\ref{tab:finres}.
 
 %% It can be observed that having too small $M<20$
 %% does not yield the best performance, we think the reason for that can
