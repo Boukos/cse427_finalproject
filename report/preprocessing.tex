@@ -2,8 +2,8 @@
 \section{Data analysis}
 The data we use is a subset of Netflix Prize data. The data consists
 of ratings for 17770 movies. There are ratings from 3255352 users in
-the training set and 100478 users in the tests set (data computed from
-the line count of TrainingRatings.txt, TestingRatings.txt and
+the training set and 100478 users in the tests set (numbers computed
+from the line count of TrainingRatings.txt, TestingRatings.txt and
 movie\_titles.txt). The size of the problem indicates that cloud
 computing is necessary.
 
@@ -30,11 +30,11 @@ data. The analysis gives us the answer of the following problems:
 \subsection*{Similarity measurement}
 The first key design choice is which similarity measurement to use for
 the $kth$ nearest neighbor search. To this end, we compute the
-histogram of average user ratings of the training set, see
+histogram of average user ratings in the training set, see
 Figure~\ref{fig:hist}.
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=0.8\textwidth]{images/hist}
+  \includegraphics[width=0.9\textwidth]{images/hist}
   \caption{Histogram of average user ratings in the training set}
   \label{fig:hist}
 \end{figure}
@@ -73,7 +73,9 @@ the similarity of each pair of movies. The memory bottleneck happens
 at the reducer of each job. For first job, the expected memory usage
 is 111.5589MB and for the second job, the expected memory usage is 4.4MB.
 
-To summarize, we decided to implement an algorithm that first computes
-movies that have similar user ratings with the query entry, then
-predicts the rating of the entry with known ratings from the similar
-movie. The similarity is measured by Cosine similarity.
+To summarize, given a user with missing ratings, we predict those
+missing ratings one by one. For each movie whose rating is missing
+(the query movie), the algorithm first computes movies that have
+similar user ratings with the query movie, then predicts the missing
+rating with known ratings from the similar movies. The similarity is
+measured by Cosine similarity.
