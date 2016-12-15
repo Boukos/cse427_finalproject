@@ -219,6 +219,3 @@ print(num_unpredicted_items + num_predicted_items)
 #print(len(unpredicted_movies))
 #print(average_prediction_dict)
 #print(weighted_average_prediction_dict)
-
-
-exit()
