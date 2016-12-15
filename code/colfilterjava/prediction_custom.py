@@ -191,5 +191,3 @@ average_prediction_dict = sorted(average_prediction_dict, key=lambda pair: pair[
 weighted_average_prediction_dict = sorted(weighted_average_prediction_dict, key=lambda pair: pair[0], reverse=True)
 print(average_prediction_dict[:10])
 print(weighted_average_prediction_dict[:10])
-
-exit()
